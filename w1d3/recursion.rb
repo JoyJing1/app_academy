@@ -11,6 +11,19 @@ def range_iterative(my_start, my_end)
   (my_start..my_end).map { |i| i }
 end
 
+def sum_rec(nums)
+  return nil if nums.length == 0
+  return nums.first if nums.length == 1
+
+  nums.first + sum_rec(nums[1..-1])
+end
+
+def sum_iter(nums)
+  sum = 0
+  nums.each{ |num| sum += num }
+  sum
+end
+
 def exp1(b,n)
   return nil if n < 0
   return 1 if n == 0
@@ -24,22 +37,18 @@ def exp2(b,n)
   return 1 if n == 0
   return b if n == 1
 
+  half = exp2(b, n/2)
+  # Note: (n / 2) == ((n - 1) / 2) if n.odd?
   if n.even?
-    prev_exp = exp2(b, n/2)
-    prev_exp * prev_exp
+    half * half
   else
-    prev_exp = exp2(b, (n-1)/2)
-    b * prev_exp * prev_exp
+    b * half * half
   end
 end
 
 class Array
   def deep_dup
-
-    self.map do |el|
-      el.is_a?(Array) ? el.deep_dup : el
-    end
-
+    self.map { |el| el.is_a?(Array) ? el.deep_dup : el }
   end
 end
 
