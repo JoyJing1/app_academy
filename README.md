@@ -8,3 +8,8 @@ This repo saves the daily projects (both finished and unfinished) and exercises 
 Projects were completed with a variety of partners through a/A's pair programming structure. 
 Each folder is labeled with the week number and day number in w#d# format.
 
+####Partners
+W1D1: Brent Luna  
+W1D2: Joseph Ngoc Bui  
+W1D3: Jonathan Lin  
+
