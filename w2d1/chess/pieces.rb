@@ -2,6 +2,8 @@ require 'byebug'
 require 'singleton'
 
 class Piece
+  attr_accessor :pos, :value, :board, :color
+
   DIRS = {:north => [-1,0],
           :northeast => [-1, 1],
           :east => [0,1],
@@ -10,8 +12,6 @@ class Piece
           :southwest => [1,-1],
           :west => [0,-1],
           :northwest => [-1,-1]}
-
-  attr_accessor :pos, :value, :board
 
   def initialize(color, start_pos, board)
     @color = color
@@ -51,7 +51,7 @@ class SlidingPiece < Piece
       #debugger
       new_square = @board[new_pos]
 
-      if new_square.nil?
+      if new_square.is_a?(NullPiece)
         moves << new_pos
       elsif new_square.color == @color
         #Stopped by own piece
@@ -78,7 +78,7 @@ class SteppingPiece < Piece
     dirs_possible = possible_moves.select do |i, j|
       new_pos = [@pos[0] + i, @pos[1] + j]
       Board.in_bounds?(new_pos) &&
-        (@board[new_pos].nil? || @board[new_pos].color != @color)
+        (@board[new_pos].is_a?(NullPiece) || @board[new_pos].color != @color)
     end
 
     dirs_possible.map {|i,j| [i += @pos[0], j += @pos[1]]}
@@ -88,7 +88,7 @@ end
 
 class Rook < SlidingPiece
   def initialize(color, start_pos, board)
-    @value = 'R'
+    @value = '♜ '
     super
   end
 
@@ -99,7 +99,7 @@ end
 
 class Queen < SlidingPiece
   def initialize(color, start_pos, board)
-    @value = 'Q'
+    @value = '♛ '
     super
   end
 
@@ -110,7 +110,7 @@ end
 
 class Bishop < SlidingPiece
   def initialize(color, start_pos, board)
-    @value = "B"
+    @value = '♝ '
     super
   end
 
@@ -131,7 +131,7 @@ class Knight < SteppingPiece
                   [-1,2]]
 
   def initialize(color, start_pos, board)
-    @value = 'N'
+    @value = '♞ '
     super
   end
 
@@ -144,7 +144,7 @@ end
 
 class King < SteppingPiece
   def initialize(color, start_pos, board)
-    @value = 'K'
+    @value = '♚ '
     super
   end
 
@@ -155,11 +155,11 @@ end
 
 
 class Pawn < Piece
-  PAWN_DIR = {  :light_blue => [[-1,-1], [-1, 0], [-1,1]],
-    :red => [[1,-1], [1,0], [1,1]] }
+  PAWN_DIR = {  :white => [[-1,-1], [-1, 0], [-1,1]],
+    :black => [[1,-1], [1,0], [1,1]] }
 
   def initialize(color, start_pos, board)
-    @value = 'P'
+    @value = '♟ '
     @moved = false
     super
   end
@@ -171,19 +171,19 @@ class Pawn < Piece
     right_capture = new_position(@pos, PAWN_DIR[@color].last)
     forward_one = new_position(@pos, PAWN_DIR[@color][1])
 
-    unless (left_capture.nil? || @board[left_capture].nil?)
+    unless (left_capture.is_a?(NullPiece) || @board[left_capture].is_a?(NullPiece))
       moves << left_capture if @board[left_capture].color != @color
     end
 
-    unless (right_capture.nil? || @board[right_capture].nil?)
+    unless (right_capture.is_a?(NullPiece) || @board[right_capture].is_a?(NullPiece))
       moves << right_capture if @board[right_capture].color != @color
     end
 
-    moves << forward_one if (!forward_one.nil? && @board[forward_one].nil?)
+    moves << forward_one if (!forward_one.is_a?(NullPiece) && @board[forward_one].is_a?(NullPiece))
 
     unless moved?
       forward_two = new_position(forward_one, PAWN_DIR[@color][1])
-      moves << forward_two if (!forward_two.nil? && @board[forward_two].nil?)
+      moves << forward_two if (!forward_two.is_a?(NullPiece) && @board[forward_two].is_a?(NullPiece))
     end
 
     moves
@@ -204,7 +204,19 @@ class Pawn < Piece
 end
 
 
-class NullPiece < Piece
+class NullPiece
   include Singleton
+
+  def value
+    "  "
+  end
+
+  def color
+    #nil
+  end
+
+  def build_moves
+    []
+  end
 
 end

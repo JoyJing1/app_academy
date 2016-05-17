@@ -21,14 +21,12 @@ class Display
         pos = [i,j]
         piece = @board[pos]
 
-        if piece.nil?
-          curr_value = '  '
-        else
-          curr_value = piece.value.colorize(piece.color)
-        end
+        curr_value = piece.value.colorize(piece.color)
 
-        if (i + j) % 2 == 1 && @cursor_pos != pos
+        if (i + j).even? && @cursor_pos != pos
           curr_value = curr_value.colorize(:background => :blue)
+        else
+          curr_value = curr_value.colorize(:background => :light_blue)
         end
 
         if @cursor_pos == pos
@@ -45,6 +43,7 @@ class Display
   def move
     result = nil
     until result
+      system('clear')
       self.render
       result = self.get_input
     end
