@@ -6,10 +6,11 @@ require 'colorize'
 
 class Display
   include Colorize, Cursorable
+  attr_accessor :cursor_pos
 
   def initialize(board)
     @board = board
-    @cursor = [0,0]
+    @cursor_pos = [0,0]
     @selected = false
   end
 
@@ -26,11 +27,11 @@ class Display
           curr_value = piece.value.colorize(piece.color)
         end
 
-        if (i + j) % 2 == 1 && @cursor != pos
+        if (i + j) % 2 == 1 && @cursor_pos != pos
           curr_value = curr_value.colorize(:background => :blue)
         end
 
-        if @cursor == pos
+        if @cursor_pos == pos
           curr_value = curr_value.colorize(:background => :green)
         end
         row_output << curr_value
@@ -41,6 +42,14 @@ class Display
     end
   end
 
+  def move
+    result = nil
+    until result
+      self.render
+      result = self.get_input
+    end
+    result
+  end
 
 
 end
