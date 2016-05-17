@@ -34,7 +34,6 @@ module Cursorable
 
   def get_input
     key = KEYMAP[read_char]
-    #byebug
     handle_key(key)
   end
 
