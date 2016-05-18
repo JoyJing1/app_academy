@@ -7,7 +7,7 @@ class Chess
     @display = Display.new(@board)
     @board.populate
     @player1 ||= HumanPlayer.new('White', :white, @display)
-    @player2 ||= HumanPlayer.new('Black', :black, @display)
+    @player2 ||= ComputerPlayer.new('Black', :black, @display)
     @current_player = @player1
   end
 
