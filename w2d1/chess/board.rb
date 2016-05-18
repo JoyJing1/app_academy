@@ -70,6 +70,15 @@ class Board
     new_board.in_check?(piece.color) ? false : true
   end
 
+  def player_pieces(color)
+    pieces = []
+    @grid.each_with_index do |row, i|
+      row.each_with_index do |piece, j|
+        pieces << piece if piece.color == color
+      end
+    end
+    pieces
+  end
 
   def [](pos)
     x,y = pos
@@ -86,7 +95,7 @@ class Board
     (0..7).include?(x) && (0..7).include?(y)
   end
 
-  private
+
   def deep_dup
     dupe = Board.new
 
@@ -105,6 +114,7 @@ class Board
     dupe
   end
 
+  private
   def back_row(color, row)
     @grid[row] = [Rook.new(color, [row,0], self),
                 Knight.new(color, [row,1], self),
@@ -120,16 +130,6 @@ class Board
     @grid[row].each_with_index do |_,i|
       @grid[row][i] = Pawn.new(color, [row,i], self)
     end
-  end
-
-  def player_pieces(color)
-    pieces = []
-    @grid.each_with_index do |row, i|
-      row.each_with_index do |piece, j|
-        pieces << piece if piece.color == color
-      end
-    end
-    pieces
   end
 
   def possible_moves(pieces)

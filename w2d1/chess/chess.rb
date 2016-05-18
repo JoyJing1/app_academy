@@ -2,6 +2,7 @@ require_relative 'exceptions'
 require_relative 'board'
 require_relative 'display'
 require_relative 'humanplayer'
+require_relative 'computerplayer'
 
 class Chess
 
@@ -9,8 +10,8 @@ class Chess
     @board = Board.new
     @display = Display.new(@board)
     @board.populate
-    @player1 = HumanPlayer.new('White', :white, @display)
-    @player2 = HumanPlayer.new('Black', :black, @display)
+    @player1 = ComputerPlayer.new('White', :white, @display)
+    @player2 = ComputerPlayer.new('Black', :black, @display)
     @current_player = @player1
   end
 
@@ -18,6 +19,7 @@ class Chess
     until game_over?
       play_turn
       switch_players!
+      sleep(0.5)
     end
     puts "#{@current_player.name}, checkmate!"
   end
