@@ -2,7 +2,7 @@ require_relative 'slidingpiece'
 
 class Queen < SlidingPiece
   def initialize(color, start_pos, board)
-    @value = '♛ '
+    @value = ' ♛ '
     super
   end
 

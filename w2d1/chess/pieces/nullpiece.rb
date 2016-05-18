@@ -4,7 +4,7 @@ class NullPiece
   include Singleton
 
   def value
-    "  "
+    "   "
   end
 
   def color

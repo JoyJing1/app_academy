@@ -11,7 +11,7 @@ class Knight < SteppingPiece
                   [-1,2]]
 
   def initialize(color, start_pos, board)
-    @value = '♞ '
+    @value = ' ♞ '
     super
   end
 

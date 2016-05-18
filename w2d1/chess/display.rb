@@ -27,7 +27,7 @@ class Display
       puts row_output.join('')
 
     end
-    puts "  #{%w{A B C D E F G H}.join(' ')}"
+    puts "   #{%w{A B C D E F G H}.join('  ')}"
   end
 
 

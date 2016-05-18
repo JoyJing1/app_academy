@@ -7,7 +7,7 @@ class Pawn < Piece
     :black => [[1,-1], [1,0], [1,1]] }
 
   def initialize(color, start_pos, board)
-    @value = '♟ '
+    @value = ' ♟ '
     @moved = false
     super
   end

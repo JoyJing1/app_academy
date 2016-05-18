@@ -2,7 +2,7 @@ require_relative 'steppingpiece'
 
 class King < SteppingPiece
   def initialize(color, start_pos, board)
-    @value = '♚ '
+    @value = ' ♚ '
     super
   end
 
