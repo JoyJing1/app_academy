@@ -37,10 +37,7 @@ class Board
   end
 
   def in_check?(color)
-    opp_color = (color == :white ? :black : :white)
-    opp_pieces = player_pieces(opp_color)
-    opponent_moves = possible_moves(opp_pieces)
-    opponent_moves.include?(king_pos(color))
+    in_danger?(color, king_pos(color))
   end
 
   def checkmate?(color)
@@ -58,6 +55,13 @@ class Board
     all_moves.select do |start_pos,end_pos|
       valid_move?(start_pos, end_pos)
     end.empty?
+  end
+
+  def in_danger?(color, pos)
+    opp_color = (color == :white ? :black : :white)
+    opp_pieces = player_pieces(opp_color)
+    opponent_moves = possible_moves(opp_pieces)
+    opponent_moves.include?(pos)
   end
 
   def valid_move?(start_pos, new_pos)

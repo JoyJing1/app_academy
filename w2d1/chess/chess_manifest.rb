@@ -1,0 +1,6 @@
+require_relative 'exceptions'
+require_relative 'board'
+require_relative 'display'
+require_relative 'humanplayer'
+require_relative 'computerplayer'
+require_relative 'dumbcomputerplayer'
