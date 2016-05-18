@@ -74,6 +74,20 @@ class Board
     new_board.in_check?(piece.color) ? false : true
   end
 
+  def make_promotions
+    @grid[0].each_with_index do |piece, i|
+      if piece.color == :white && piece.is_a?(Pawn)
+        @grid[0][i] = Queen.new(:white,[0,i],self)
+      end
+    end
+
+    @grid[7].each_with_index do |piece, i|
+      if piece.color == :black && piece.is_a?(Pawn)
+        @grid[7][i] = Queen.new(:black,[7,i],self)
+      end
+    end
+  end
+
   def player_pieces(color)
     pieces = []
     @grid.each_with_index do |row, i|

@@ -7,17 +7,18 @@ class Chess
     @display = Display.new(@board)
     @board.populate
     @player1 ||= ComputerPlayer.new('White', :white, @display)
-    @player2 ||= DumbComputerPlayer.new('Black', :black, @display)
+    @player2 ||= ComputerPlayer.new('Black', :black, @display)
     @current_player = @player1
   end
 
   def play
     until game_over?
       play_turn
+      @board.make_promotions
       switch_players!
       sleep(0.1)
     end
-    puts "#{@current_player.name}, checkmate!"
+    puts "#{@current_player.name}, Checkmate!"
   end
 
   private

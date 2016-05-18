@@ -32,6 +32,9 @@ class ComputerPlayer
     dangerous_check = valid_moves.select {|key, value| value == :dangerous_check}
     return dangerous_check.first.first unless dangerous_check.empty?
 
+    # safe = valid_moves.select {|key, value| value == :safe}
+    # return safe.first.first unless safe.empty?
+
     valid_moves.keys.sample
   end
 
@@ -66,6 +69,7 @@ class ComputerPlayer
     return :check if check_potential
     return :dangerous_capture if danger && capture
     return :capture if capture
+    return :safe unless danger
     :nothing
   end
 
