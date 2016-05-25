@@ -1,0 +1,7 @@
+require_relative 'qdb'
+require_relative 'user'
+require_relative 'question'
+require_relative 'reply'
+require_relative 'q_follow'
+require_relative 'q_like'
+require_relative 'modelbase'
